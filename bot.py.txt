@@ -1,0 +1,28 @@
+import telebot
+import os
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+bot = telebot.TeleBot(BOT_TOKEN)
+
+@bot.message_handler(commands=["start"])
+def start(message):
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.row("📌 Приступить к заданию")
+    markup.row("👤 Личный кабинет", "🤝 Реферальная программа")
+    markup.row("💬 Техподдержка")
+    bot.send_message(message.chat.id, "Добро пожаловать! Выберите пункт меню:", reply_markup=markup)
+
+@bot.message_handler(func=lambda m: True)
+def handle_message(message):
+    if message.text == "📌 Приступить к заданию":
+        bot.send_message(message.chat.id, "Снизу предложены актуальные платформы, по которым для вас доступны задания:\n— Яндекс карты\n— Google Maps\n— Avito\n— 2GIS\n— Доп. задания")
+    elif message.text == "👤 Личный кабинет":
+        bot.send_message(message.chat.id, "🆔 Ваш ID: {}\n⚜️ Ваш логин: {}\n...и т.д.".format(message.chat.id, message.from_user.username))
+    elif message.text == "🤝 Реферальная программа":
+        bot.send_message(message.chat.id, "Ваша реферальная ссылка: https://t.me/yourbot?start={}".format(message.chat.id))
+    elif message.text == "💬 Техподдержка":
+        bot.send_message(message.chat.id, "Напишите в поддержку: @ваш_менеджер")
+    else:
+        bot.send_message(message.chat.id, "Пункт пока не реализован.")
+
+bot.polling()
