@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коммерческое предложение — Вывод Яндекс Карт в ТОП</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        /* Фоновое изображение на весь документ */
+        .page-wrapper {
+            background: url('https://284baef4-3d14-4ca5-8247-4811f0d6b14b.selstorage.ru/27769611-3738-4623-a704-420e778f8607_FON.png') no-repeat center top;
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .page-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.95) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #A3FF15, #67B400);
+            color: #000;
+            padding: 8px 24px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, #A3FF15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            color: #A7A7A7;
+            max-width: 700px;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #A3FF15, #67B400);
+            color: #000;
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 40px rgba(163, 255, 21, 0.3);
+        }
+        
+        .hero-cta:hover {
+            box-shadow: 0 0 60px rgba(163, 255, 21, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-label {
+            color: #A3FF15;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            line-height: 1.2;
+        }
+        
+        /* What is Discovery Section */
+        .what-is {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(163, 255, 21, 0.2);
+            padding: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .what-is-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .what-is-text p {
+            font-size: 20px;
+            color: #BCC0C4;
+            line-height: 1.8;
+        }
+        
+        .what-is-text strong {
+            color: #A3FF15;
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, rgba(163, 255, 21, 0.1), transparent);
+            border: 1px solid rgba(163, 255, 21, 0.3);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .formula {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: #A3FF15;
+            margin-bottom: 20px;
+        }
+        
+        .formula span {
+            display: inline-block;
+            margin: 0 15px;
+        }
+        
+        .formula-result {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        /* Benefits Cards */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid #222;
+        }
+        
+        .benefit-card {
+            padding: 40px 30px;
+            border-right: 1px solid #222;
+            background: linear-gradient(180deg, rgba(163, 255, 21, 0.05) 0%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .benefit-card:last-child {
+            border-right: none;
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 1px 1px, rgba(163, 255, 21, 0.1) 1px, transparent 0);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+        
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefit-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefit-card p {
+            font-size: 15px;
+            color: #A7A7A7;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* SVG Icons */
+        .icon-star {
+            fill: none;
+            stroke: #A3FF15;
+            stroke-width: 2;
+        }
+        
+        .icon-star-fill {
+            fill: #000;
+        }
+        
+        /* Advantages Section (точь в точь как на скрине) */
+        .advantages-section {
+            padding: 100px 0;
+        }
+        
+        .advantages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+        
+        .advantages-header-left .section-label {
+            color: #A7A7A7;
+            margin-bottom: 20px;
+        }
+        
+        .advantages-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+        
+        .advantages-cta {
+            background: #E5E5E5;
+            color: #181818;
+            padding: 20px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid #222;
+        }
+        
+        .advantage-card {
+            padding: 50px 40px;
+            border-right: 1px solid #222;
+            background: linear-gradient(135deg, rgba(163, 255, 21, 0.08) 0%, transparent 70%);
+            position: relative;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .advantage-card:last-child {
+            border-right: none;
+        }
+        
+        .advantage-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 1px 1px, rgba(163, 255, 21, 0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+            opacity: 0.6;
+        }
+        
+        .advantage-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .advantage-icon {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .advantage-card p {
+            font-size: 17px;
+            color: #BCC0C4;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+            margin-top: auto;
+        }
+        
+        /* Work Stages */
+        .stages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .stage-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(163, 255, 21, 0.2);
+            padding: 40px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .stage-card:hover {
+            border-color: #A3FF15;
+            box-shadow: 0 0 30px rgba(163, 255, 21, 0.2);
+        }
+        
+        .stage-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            color: rgba(163, 255, 21, 0.2);
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .stage-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #A3FF15;
+        }
+        
+        .stage-card p {
+            font-size: 16px;
+            color: #A7A7A7;
+            line-height: 1.6;
+        }
+        
+        /* Results Section */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .result-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 30px;
+            background: transparent;
+            border: none;
+            border-left: 2px solid rgba(163, 255, 21, 0.3);
+        }
+        
+        .result-icon {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        
+        .result-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: #A3FF15;
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .result-text {
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            color: #fff;
+        }
+        
+        /* Screenshot Section */
+        .screenshot-section {
+            padding: 80px 0;
+        }
+        
+        .screenshot-image {
+            width: 100%;
+            border: 1px solid rgba(163, 255, 21, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            text-align: center;
+            padding: 120px 0;
+        }
+        
+        .pricing-box {
+            background: linear-gradient(135deg, rgba(163, 255, 21, 0.1), rgba(0, 0, 0, 0.8));
+            border: 2px solid #A3FF15;
+            padding: 80px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 80px rgba(163, 255, 21, 0.2);
+        }
+        
+        .price-label {
+            font-size: 18px;
+            color: #A7A7A7;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            color: #A3FF15;
+            margin-bottom: 20px;
+        }
+        
+        .price-note {
+            font-size: 16px;
+            color: #A7A7A7;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Warning Section */
+        .warning-section {
+            background: linear-gradient(135deg, rgba(255, 87, 51, 0.1), transparent);
+            border-left: 4px solid #FF5733;
+            padding: 40px;
+            margin-top: 60px;
+        }
+        
+        .warning-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            color: #FF5733;
+            margin-bottom: 20px;
+        }
+        
+        .warning-list {
+            list-style: none;
+        }
+        
+        .warning-list li {
+            font-size: 18px;
+            color: #BCC0C4;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .warning-list li::before {
+            content: '✕';
+            position: absolute;
+            left: 0;
+            color: #FF5733;
+            font-weight: bold;
+        }
+        
+        .cta-final {
+            background: linear-gradient(135deg, #A3FF15, #67B400);
+            color: #000;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 25px 60px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 40px rgba(163, 255, 21, 0.3);
+        }
+        
+        .cta-final:hover {
+            box-shadow: 0 0 60px rgba(163, 255, 21, 0.5);
+            transform: scale(1.02);
+        }
+        
+        /* Footer Note */
+        .footer-note {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid #222;
+            margin-top: 60px;
+        }
+        
+        .footer-note p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: #A3FF15;
+        }
+        
+        /* What You Get Section with Image */
+        .what-you-get-section {
+            padding: 80px 0;
+        }
+        
+        .what-you-get-image {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #A3FF15, transparent);
+            margin: 80px 0;
+        }
+
+        
+        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 30px;
+            }
+            
+            .hero h1 {
+                font-size: 56px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .benefit-card:nth-child(2n) {
+                border-right: none;
+            }
+            
+            .benefit-card:nth-child(1),
+            .benefit-card:nth-child(3) {
+                border-right: 1px solid #222;
+            }
+            
+            .advantages-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .advantage-card {
+                border-right: none;
+                border-bottom: 1px solid #222;
+            }
+            
+            .advantage-card:last-child {
+                border-bottom: none;
+            }
+            
+            .stages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Фон остается на мобилках */
+            .page-wrapper {
+                background-size: cover;
+                background-position: center top;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+                min-height: auto;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .hero-cta {
+                padding: 18px 35px;
+                font-size: 16px;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .what-is {
+                padding: 40px 30px;
+            }
+            
+            .what-is-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefit-card,
+            .benefit-card:nth-child(1),
+            .benefit-card:nth-child(2),
+            .benefit-card:nth-child(3) {
+                border-right: none;
+                border-bottom: 1px solid #222;
+            }
+            
+            .benefit-card:last-child {
+                border-bottom: none;
+            }
+            
+            .advantages-header {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .advantages-title {
+                font-size: 36px;
+            }
+            
+            .stages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-box {
+                padding: 50px 30px;
+            }
+            
+            .price {
+                font-size: 56px;
+            }
+            
+            .warning-section {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-badge {
+                font-size: 10px;
+                padding: 6px 16px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero-subtitle {
+                font-size: 16px;
+            }
+            
+            .hero-cta {
+                width: 100%;
+                justify-content: center;
+                padding: 16px 25px;
+                font-size: 14px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .what-is {
+                padding: 25px 20px;
+            }
+            
+            .what-is-text p {
+                font-size: 16px;
+            }
+            
+            .formula-box {
+                padding: 25px;
+            }
+            
+            .formula {
+                font-size: 14px;
+            }
+            
+            .formula-result {
+                font-size: 18px;
+            }
+            
+            .benefit-card,
+            .advantage-card {
+                padding: 30px 20px;
+            }
+            
+            .benefit-card h3,
+            .advantage-card h3 {
+                font-size: 18px;
+            }
+            
+            .advantages-title {
+                font-size: 28px;
+            }
+            
+            .advantages-cta {
+                width: 100%;
+                padding: 18px 30px;
+                font-size: 14px;
+            }
+            
+            .stage-card {
+                padding: 30px 25px;
+            }
+            
+            .stage-number {
+                font-size: 48px;
+            }
+            
+            .stage-card h3 {
+                font-size: 18px;
+            }
+            
+            .stage-card p {
+                font-size: 14px;
+            }
+            
+            .pricing-box {
+                padding: 40px 20px;
+            }
+            
+            .price {
+                font-size: 48px;
+            }
+            
+            .cta-final {
+                width: 100%;
+                padding: 20px 40px;
+                font-size: 16px;
+            }
+            
+            .warning-section h3 {
+                font-size: 20px;
+            }
+            
+            .warning-list li {
+                font-size: 15px;
+            }
+            
+            .footer-note p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <span class="hero-badge">🏆 ТОП услуга</span>
+                <h1>Вывод Яндекс<br>Карт в ТОП</h1>
+                <p class="hero-subtitle">
+                    Discovery-трафик — привлечение клиентов через поисковую выдачу по категориям. 
+                    Заберём топ выдачи и трафик конкурентов. Ваш профиль станет заметнее для потенциальных клиентов.
+                </p>
+                <a href="#pricing" class="hero-cta">
+                    Узнать стоимость
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- What is Discovery -->
+        <section class="section">
+            <div class="container">
+                <span class="section-label">01 — Что это такое</span>
+                <h2 class="section-title">Discovery-переходы</h2>
+                
+                <div class="what-is">
+                    <div class="what-is-content">
+                        <div class="what-is-text">
+                            <p>
+                                <strong>Discovery-переходы</strong> — это клиенты, которые ищут «кафе рядом», «автосервис», «стоматология» и находят вас в результатах на картах. Не по названию — а по категории.
+                            </p>
+                        </div>
+                        <div class="formula-box">
+                            <div class="formula">
+                                Выше позиция <span>→</span> Больше Discovery <span>→</span> Больше клиентов
+                            </div>
+                            <div class="formula-result">
+                                ТОП-1 забирает <span style="color: #A3FF15;">37%</span> всего трафика в нише
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Discovery Gives - Benefits Grid -->
+        <section class="section">
+            <div class="container">
+                <span class="section-label">Что дают дискавери-переходы</span>
+                <h2 class="section-title" style="margin-bottom: 40px;">Ваши выгоды</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <svg class="benefit-icon" viewBox="0 0 80 80">
+                            <path d="M40 5L48 25L70 28L54 44L58 65L40 55L22 65L26 44L10 28L32 25L40 5Z" fill="#000" stroke="#A3FF15" stroke-width="2"/>
+                        </svg>
+                        <h3>Трафик</h3>
+                        <p>Высокие позиции привлекают больше целевого трафика на вашу карточку</p>
+                    </div>
+                    <div class="benefit-card">
+                        <svg class="benefit-icon" viewBox="0 0 80 80">
+                            <circle cx="40" cy="30" r="15" fill="none" stroke="#A3FF15" stroke-width="2"/>
+                            <path d="M25 65C25 50 55 50 55 65" fill="none" stroke="#A3FF15" stroke-width="2"/>
+                            <circle cx="60" cy="25" r="10" fill="none" stroke="#67B400" stroke-width="2"/>
+                            <path d="M50 55C50 45 70 45 70 55" fill="none" stroke="#67B400" stroke-width="2"/>
+                        </svg>
+                        <h3>Новые клиенты</h3>
+                        <p>Продвижение через ключевые запросы привлекает новую, «холодную» аудиторию, ещё не знакомую с вашим бизнесом</p>
+                    </div>
+                    <div class="benefit-card">
+                        <svg class="benefit-icon" viewBox="0 0 80 80">
+                            <rect x="15" y="20" width="50" height="40" rx="3" fill="none" stroke="#A3FF15" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="12" fill="none" stroke="#A3FF15" stroke-width="2"/>
+                            <path d="M40 28V40L48 48" fill="none" stroke="#67B400" stroke-width="2"/>
+                        </svg>
+                        <h3>Узнаваемость<br>бренда</h3>
+                        <p>Дискавери продвижение увеличивает показы в Яндекс Картах и рекомендациях</p>
+                    </div>
+                    <div class="benefit-card">
+                        <svg class="benefit-icon" viewBox="0 0 80 80">
+                            <path d="M20 60L20 35" stroke="#A3FF15" stroke-width="8" stroke-linecap="round"/>
+                            <path d="M40 60L40 25" stroke="#A3FF15" stroke-width="8" stroke-linecap="round"/>
+                            <path d="M60 60L60 15" stroke="#67B400" stroke-width="8" stroke-linecap="round"/>
+                            <path d="M15 20L65 20" stroke="#A3FF15" stroke-width="2" stroke-dasharray="4 4"/>
+                        </svg>
+                        <h3>Победа над<br>конкурентами</h3>
+                        <p>Вытесняем из топа конкурентов, а вы — забираете их долю трафика</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container"><div class="divider"></div></div>
+
+        <!-- Advantages Section (как на скрине 3) -->
+        <section class="advantages-section">
+            <div class="container">
+                <div class="advantages-header">
+                    <div class="advantages-header-left">
+                        <span class="section-label">Что вы получите</span>
+                        <h2 class="advantages-title">Преимущества<br>дискавери-переходов</h2>
+                    </div>
+                    <button class="advantages-cta">Начать работу</button>
+                </div>
+                
+                <div class="advantages-grid">
+                    <div class="advantage-card">
+                        <h3>Повышение<br>позиций в поиске</h3>
+                        <div class="advantage-icon">
+                            <svg width="90" height="90" viewBox="0 0 90 90">
+                                <defs>
+                                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <path d="M45 8L55 32L82 36L62 55L67 82L45 70L23 82L28 55L8 36L35 32L45 8Z" 
+                                      fill="#000" stroke="#A3FF15" stroke-width="3" filter="url(#glow)"/>
+                            </svg>
+                        </div>
+                        <p>Активность на профиле повысит позиции в поисковой выдаче.</p>
+                    </div>
+                    <div class="advantage-card">
+                        <h3>Рост органического<br>трафика</h3>
+                        <div class="advantage-icon">
+                            <svg width="90" height="90" viewBox="0 0 90 90">
+                                <path d="M15 65L35 45L50 55L75 25" fill="none" stroke="#A3FF15" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+                                <path d="M60 25L75 25L75 40" fill="none" stroke="#67B400" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p>Чем больше дискавери-переходов, тем чаще заходят на профиль новые клиенты.</p>
+                    </div>
+                    <div class="advantage-card">
+                        <h3>Приток целевых<br>клиентов</h3>
+                        <div class="advantage-icon">
+                            <svg width="90" height="90" viewBox="0 0 90 90">
+                                <rect x="15" y="50" width="15" height="25" fill="#1a1a1a" stroke="#A3FF15" stroke-width="2"/>
+                                <rect x="38" y="35" width="15" height="40" fill="#1a1a1a" stroke="#A3FF15" stroke-width="2"/>
+                                <rect x="61" y="15" width="15" height="60" fill="#A3FF15" filter="url(#glow)"/>
+                            </svg>
+                        </div>
+                        <p>Повышение доверия текущей аудитории и привлечение новых клиентов</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container"><div class="divider"></div></div>
+
+        <!-- What You Get - Screenshot Section -->
+        <section class="what-you-get-section">
+            <div class="container">
+                <span class="section-label">До и после</span>
+                <img src="https://284baef4-3d14-4ca5-8247-4811f0d6b14b.selstorage.ru/81213f31-e0e0-4caa-b5ba-695a3221d47a_ChTO_POLUChAETE.jpg" alt="До и после работы" class="what-you-get-image">
+            </div>
+        </section>
+
+        <div class="container"><div class="divider"></div></div>
+
+        <!-- Work Stages -->
+        <section class="section">
+            <div class="container">
+                <span class="section-label">02 — Что входит в работу</span>
+                <h2 class="section-title">Этапы работы</h2>
+                
+                <div class="stages-grid">
+                    <div class="stage-card">
+                        <span class="stage-number">01</span>
+                        <h3>Аудит карточки</h3>
+                        <p>Смотрим позиции, конкурентов, нужна ли оптимизация и какой объём трафика лить</p>
+                    </div>
+                    <div class="stage-card">
+                        <span class="stage-number">02</span>
+                        <h3>Расчёт стратегии</h3>
+                        <p>Определяем необходимый объём Discovery-трафика под вашу нишу</p>
+                    </div>
+                    <div class="stage-card">
+                        <span class="stage-number">03</span>
+                        <h3>Запуск ПФ</h3>
+                        <p>Льём Discovery-трафик: просмотры, маршруты, взаимодействия с карточкой</p>
+                    </div>
+                    <div class="stage-card">
+                        <span class="stage-number">04</span>
+                        <h3>Рост позиций</h3>
+                        <p>Яндекс поднимает карточку в выдаче — получаете больше реальных клиентов</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container"><div class="divider"></div></div>
+
+        <!-- Results -->
+        <section class="section">
+            <div class="container">
+                <span class="section-label">03 — Результаты</span>
+                <h2 class="section-title">Что вы получите</h2>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 17L9 11L13 15L21 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15 7H21V13" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></div>
+                        <div class="result-text">Рост позиций в Discovery</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></div>
+                        <div class="result-text">Больше показов карточки</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 16.92V19.92C22 20.48 21.56 20.93 21 20.99C20.77 21 20.54 21 20.31 21C10.82 21 3 13.18 3 3.69C3 3.46 3 3.23 3.01 3C3.07 2.44 3.52 2 4.08 2H7.08C7.57 2 8 2.37 8.08 2.85C8.14 3.29 8.22 3.73 8.35 4.15C8.49 4.62 8.35 5.12 7.98 5.49L6.77 6.7C8.09 9.15 10.1 11.16 12.55 12.48L13.76 11.27C14.13 10.9 14.63 10.76 15.1 10.9C15.52 11.03 15.96 11.11 16.4 11.17C16.88 11.25 17.25 11.68 17.25 12.17V15.17C17.25 15.72 16.84 16.18 16.29 16.25C15.79 16.31 15.29 16.34 14.79 16.34C14.53 16.34 14.27 16.33 14.01 16.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></div>
+                        <div class="result-text">Больше звонков</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L12 8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 22L12 15" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4.93 4.93L9.17 9.17" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14.83 14.83L19.07 19.07" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></div>
+                        <div class="result-text">Больше маршрутов</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="12" width="4" height="8" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="10" y="8" width="4" height="12" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="16" y="4" width="4" height="16" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></div>
+                        <div class="result-text">Доля трафика в нише</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9" cy="7" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 21V19C3 16.79 4.79 15 7 15H11C13.21 15 15 16.79 15 19V21" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="17" cy="7" r="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 21V19.5C21 17.84 19.66 16.5 18 16.5H17" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></div>
+                        <div class="result-text">Приток новых клиентов</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container"><div class="divider"></div></div>
+
+        <!-- Pricing -->
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <span class="section-label">Стоимость</span>
+                <h2 class="section-title">Инвестиции в рост</h2>
+                
+                <div class="pricing-box">
+                    <div class="price-label">Средняя стоимость</div>
+                    <div class="price">12 000 ₽</div>
+                    <div class="price-note">
+                        в месяц<br><br>
+                        💡 Стоимость может быть увеличена в зависимости от конкуренции — чем жёстче ниша, тем больше трафика нужно лить для результата
+                    </div>
+                    <button class="cta-final">Начать работу</button>
+                </div>
+                
+                <div class="warning-section">
+                    <h3>⚠️ Важно: это долгосрочная работа</h3>
+                    <p style="font-size: 18px; color: #fff; margin-bottom: 20px;">
+                        Остановите работу с ПФ — конкуренты заберут ваш трафик.
+                    </p>
+                    <ul class="warning-list">
+                        <li>Яндекс видит, что активность карточки упала — позиции снижаются</li>
+                        <li>Конкуренты продолжают лить трафик — они поднимаются, вы опускаетесь</li>
+                        <li>Клиенты уходят к тем, кто выше в выдаче</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer-note">
+            <div class="container">
+                <p>Discovery-трафик — стабильный поток клиентов с Яндекс.Карт</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
